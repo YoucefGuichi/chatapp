@@ -1,2 +1,3 @@
 flask-socketio
 simple-websocket
+flask-session
