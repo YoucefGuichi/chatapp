@@ -13,7 +13,7 @@ socketio = SocketIO(app, manage_session=False)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("index.html")
+    return render_template("home.html")
 
 
 @app.route('/login')
@@ -24,6 +24,11 @@ def login():
 @app.route('/register')
 def register():
     return render_template('register.html')
+
+
+@app.route("/join_chat", methods=["GET", "POST"])
+def join_chat():
+    return render_template("index.html")
 
 
 @app.route("/chat", methods=["GET", "POST"])
@@ -63,6 +68,6 @@ def left(message):
 
 
 if __name__ == "__main__":
-    socketio.run(app,debug=True)
+    socketio.run(app, debug=True)
 
 # todo: https://www.youtube.com/watch?v=2-S-PMWJVxM
