@@ -5,3 +5,4 @@ flask_login
 flask_bcrypt
 flask_wtf
 wtforms email_validator
+flask-session
