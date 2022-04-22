@@ -70,4 +70,4 @@ def left(message):
 if __name__ == "__main__":
     socketio.run(app, debug=True)
 
-# todo: https://www.youtube.com/watch?v=2-S-PMWJVxM
+
