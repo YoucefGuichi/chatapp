@@ -1,8 +1,8 @@
 flask-socketio
 simple-websocket
-flask_sqlalchemy
 flask_login
 flask_bcrypt
+pandas
 flask_wtf
 wtforms email_validator
 flask-session

@@ -1,7 +1,7 @@
-from flask import Flask, render_template, url_for
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_socketio import SocketIO, join_room, leave_room, emit
 from flask_session import Session
+import pandas
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secret!"
@@ -21,8 +21,28 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/register')
+import pandas as pd
+
+
+@app.route('/register', methods=["GET", "POST"])
 def register():
+    df = pd.read_csv('database.csv')
+    if request.method == "POST":
+        email = request.form.get("email")
+        username = request.form.get("username")
+        password = request.form.get("password")
+        confirmPassword = request.form.get("confirmPassword")
+        ID = df['ID'].max() + 1
+        if password == confirmPassword:
+            new_user = {
+                'ID': [ID],
+                'Username': [username],
+                'Password': [password],
+                'Email': [email]
+            }
+            df = pd.DataFrame(new_user)
+            df.to_csv('database.csv', mode='a', index=False, columns=['ID', 'Username', 'Email', 'Password'])
+            return render_template('login.html')
     return render_template('register.html')
 
 
@@ -69,5 +89,3 @@ def left(message):
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)
-
-
