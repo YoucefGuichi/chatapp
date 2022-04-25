@@ -1,14 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+   <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/64d58efce2.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}" />
     <title>Home page</title>
 </head>
 <body>
+<div class="container">
+     <div class="panels-container">
+        <div class="panel left-panel">
+            <img src="{{ url_for('static', filename='img/logo-uni-miskolc.png') }}" class="image" alt="" />
+            <div class="H2HomePage">
+                <h2> Welcome to the home page of our chat application </h2>
+                <h2> Under the supervision of </h2>
+                <h3>Dr Peter Millef </h3><br>
+                <h3> Made by </h3><br>
+                <ul class="ulNames">
+                    <li>G. Youcef</li>
+                    <li>L. Raouia</li>
+                    <li>S. Yasserf</li>
+                </ul>
+            </div>
 
-<h1> Welcome to the home page of our chat application made by G. Youcef & L. Raouia & S. Yasser </h1>
-<a href="{{url_for('login')}}"> Login Page</a><br>
-<a href="{{url_for('register')}}"> Register Page</a>
+
+
+        </div>
+         <div class="panel right-panel">
+             <button class="btn transparent" id="sign-in-btn">
+             <a href="{{url_for('login')}}"> Login Page</a><br>
+            </button>
+             <button class="btn transparent">
+             <a href="{{url_for('register')}}"> Register Page</a>
+            </button>
+         </div>
+     </div>
+     </div>
+
+
 
 </body>
 </html>
