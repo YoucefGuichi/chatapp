@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_socketio import SocketIO, join_room, leave_room, emit
 from flask_session import Session
 import pandas
+import pandas as pd
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secret!"
@@ -16,12 +17,22 @@ def index():
     return render_template("home.html")
 
 
-@app.route('/login')
+@app.route('/login', methods=["GET", "POST"])
 def login():
+    df = pd.read_csv('database.csv')
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        if username in df['Username'].values:
+            nb = df.index[df['Username'] == username].values
+            if password == df.iloc[nb.max(None)]['Password']:
+                return render_template('index.html')
+            else:
+                print('Username or password incorrect')
+        else:
+            print('Username or password incorrect')
+
     return render_template('login.html')
-
-
-import pandas as pd
 
 
 @app.route('/register', methods=["GET", "POST"])
@@ -33,16 +44,25 @@ def register():
         password = request.form.get("password")
         confirmPassword = request.form.get("confirmPassword")
         ID = df['ID'].max() + 1
-        if password == confirmPassword:
-            new_user = {
-                'ID': [ID],
-                'Username': [username],
-                'Password': [password],
-                'Email': [email]
-            }
-            df = pd.DataFrame(new_user)
-            df.to_csv('database.csv', mode='a', index=False, columns=['ID', 'Username', 'Email', 'Password'])
-            return render_template('login.html')
+        if email is not None and username is not None and password is not None and confirmPassword is not None:
+            if password == confirmPassword:
+                if not (email in df['Email'].values) and not (username in df['Username'].values):
+                    new_user = {
+                        'ID': [ID],
+                        'Username': [username],
+                        'Password': [password],
+                        'Email': [email]
+                    }
+                    df = pd.DataFrame(new_user)
+                    df.to_csv('database.csv', mode='a', index=False, columns=['ID', 'Username', 'Password', 'Email'])
+                    return render_template('login.html')
+                else:
+                    print("User already exist!!")
+            else:
+                print("Passwords do not match!!")
+        else:
+            print("Please fill all the form")
+
     return render_template('register.html')
 
 
