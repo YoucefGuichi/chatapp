@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>CodePen - animated form</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 <body>
@@ -106,7 +106,7 @@
 				<div class="text sign-in">
 					
 					<h2>
-						<img src="White_miskolc.png" alt="Flowers in Chania">
+						<img src="{{ url_for('static', filename='img/White_miskolc.png') }}" alt="Flowers in Chania">
 					</h2>
 	
 				</div>
@@ -132,7 +132,7 @@
 		<!-- END CONTENT SECTION -->
 	</div>
 <!-- partial -->
-  <script  src="./script.js"></script>
+  <script  src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
 </html>
