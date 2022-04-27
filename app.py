@@ -28,9 +28,11 @@ def login():
             if password == df.iloc[nb.max(None)]['Password']:
                 return render_template('index.html')
             else:
-                print('Username or password incorrect')
+                msg = "Username or password incorrect"
+                return render_template('login.html', message=msg)
         else:
-            print('Username or password incorrect')
+            msg = "Username or password incorrect"
+            return render_template('login.html', message=msg)
 
     return render_template('login.html')
 
@@ -44,7 +46,10 @@ def register():
         password = request.form.get("password")
         confirmPassword = request.form.get("confirmPassword")
         ID = df['ID'].max() + 1
-        if email is not None and username is not None and password is not None and confirmPassword is not None:
+        if (email == "") or (username == "") or (password == "") or (confirmPassword == ""):
+            msg = "Please fill all the form"
+            return render_template('register.html', message=msg)
+        else:
             if password == confirmPassword:
                 if not (email in df['Email'].values) and not (username in df['Username'].values):
                     new_user = {
@@ -57,11 +62,11 @@ def register():
                     df.to_csv('database.csv', mode='a', index=False, columns=['ID', 'Username', 'Password', 'Email'])
                     return render_template('login.html')
                 else:
-                    print("User already exist!!")
+                    msg = "User already exist"
+                    return render_template('register.html', message=msg)
             else:
-                print("Passwords do not match!!")
-        else:
-            print("Please fill all the form")
+                msg = "Passwords are not the same"
+                return render_template('register.html', message=msg)
 
     return render_template('register.html')
 

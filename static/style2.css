@@ -201,6 +201,10 @@ text-align: left;
 font-size: 130%;
 }
 
+.errors{
+color: #e3291b;
+}
+
 .right-panel {
   pointer-events: all;
   padding: 15rem 20% 12rem 35%;
