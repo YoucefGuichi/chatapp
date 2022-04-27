@@ -14,21 +14,26 @@
    <div class="container">
       <div class="forms-container">
         <div class="signin-signup">
-          <form action="#" class="sign-in-form">
+          <form action="#" class="sign-in-form" method="post">
            <h2 class="title">Sign up</h2>
             <div class="input-field">
               <i class="fas fa-envelope"></i>
-              <input type="email" placeholder="Email" />
+              <input type="email" name="email" placeholder="Email" />
+            </div>
+              <div class="input-field">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                  <input type="text" name="username" placeholder="Username" />
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" />
+              <input type="password" name="password" placeholder="Password" />
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Confirm Password" />
+              <input type="password" name="confirmPassword" placeholder="Confirm Password" />
             </div>
             <input type="submit" class="btn" value="Sign up" />
+              <h3 class="errors"> {{message}} </h3>
             <p class="social-text">Or Sign up with social platforms</p>
             <div class="social-media">
               <a href="#" class="social-icon">
@@ -65,6 +70,5 @@
 
     </div>
 
-   <!-- <script src="animation.js"></script> -->
   </body>
 </html>

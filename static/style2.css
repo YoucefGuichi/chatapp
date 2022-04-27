@@ -191,12 +191,23 @@ form.sign-in-form {
 
 .left-panel {
   pointer-events: all;
-  padding: 3rem 17% 2rem 12%;
+  padding: 3rem 15% 8rem 12%;
+}
+.H2HomePage {
+text-align: center;
+}
+.ulNames{
+text-align: left;
+font-size: 130%;
+}
+
+.errors{
+color: #e3291b;
 }
 
 .right-panel {
-  pointer-events: none;
-  padding: 3rem 12% 2rem 17%;
+  pointer-events: all;
+  padding: 15rem 20% 12rem 35%;
 }
 
 .panel .content {
