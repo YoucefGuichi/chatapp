@@ -1,3 +1,5 @@
+import csv
+
 from flask import Flask, render_template, url_for
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_socketio import SocketIO, join_room, leave_room, emit
@@ -44,22 +46,18 @@ def register():
         email = request.form.get("email")
         username = request.form.get("username")
         password = request.form.get("password")
-        confirmPassword = request.form.get("confirmPassword")
-        ID = df['ID'].max() + 1
-        if (email == "") or (username == "") or (password == "") or (confirmPassword == ""):
+        confirm_password = request.form.get("confirmPassword")
+        user_id = df['ID'].max() + 1
+        if (email == "") or (username == "") or (password == "") or (confirm_password == ""):
             msg = "Please fill all the form"
             return render_template('register.html', message=msg)
         else:
-            if password == confirmPassword:
+            if password == confirm_password:
                 if not (email in df['Email'].values) and not (username in df['Username'].values):
-                    new_user = {
-                        'ID': [ID],
-                        'Username': [username],
-                        'Password': [password],
-                        'Email': [email]
-                    }
-                    df = pd.DataFrame(new_user)
-                    df.to_csv('database.csv', mode='a', index=False, columns=['ID', 'Username', 'Password', 'Email'])
+                    new_user = [user_id, username, password, email]
+                    with open("database.csv", "a") as database:
+                        db_writer = csv.writer(database)
+                        db_writer.writerow(new_user)
                     return render_template('login.html')
                 else:
                     msg = "User already exist"
