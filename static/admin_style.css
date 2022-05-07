@@ -1,0 +1,18 @@
+.admin-header{
+    background-color: #333333;
+    text-align: center;
+    color: white;
+    margin: auto;
+    border-radius: 5px;
+    font-family: "Baloo Paaji 2";
+
+}
+.input-config{
+    margin-top: 100px;
+}
+.admin-form{
+    margin: auto;
+}
+.form-group{
+    margin: auto;
+}

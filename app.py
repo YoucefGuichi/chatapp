@@ -7,8 +7,8 @@ from flask_session import Session
 import pandas as pd
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "secret!"
-app.config["SESSION_TYPE"] = "filesystem"
+app.secret_key = 'super secret key yeep'
+app.config['SESSION_TYPE'] = 'filesystem'
 
 Session(app)
 socketio = SocketIO(app, manage_session=False)
@@ -28,7 +28,7 @@ def login():
         if username in df['Username'].values:
             nb = df.index[df['Username'] == username].values
             if password == df.iloc[nb.max(None)]['Password']:
-                return render_template('index.html', message= username)
+                return render_template('index.html', message=username)
             else:
                 msg = "Username or password incorrect"
                 return render_template('login.html', message=msg)
@@ -77,40 +77,54 @@ def join_chat():
 @app.route("/chat", methods=["GET", "POST"])
 def chat():
     if request.method == "POST":
-        nickname = request.form["nickname"] #Error here, needs to get the username name directly!!
-        room_name = request.form["room"]
 
-        # pass values to session
-        session["nickname"] = nickname
-        session["room_name"] = room_name
+        user_name = request.form.get("user_name")
+        room_name = request.form.get("room")
+        room_from_rooms_list = request.form.get("rooms_list")
+
+        if room_name == "":
+            session["room_name"] = room_from_rooms_list
+        else:
+            session["room_name"] = room_name
+
+        session["username"] = user_name
+
         return render_template("chat_template.html", session=session)
     else:
         return redirect(url_for("index"))
 
 
+@app.route("/admin", methods=["GET", "POST"])
+def admin():
+    users_data = pd.read_csv("database.csv")
+    users = users_data.itertuples()
+    column_names = users_data.columns.values
+    return render_template("admin.html", users=users, column_names=column_names)
+
+
 @socketio.on('join', namespace='/chat')
 def join(message):
     room = session.get('room_name')
+    print(room)
+    print(session.get("username"))
     join_room(room)
-    emit('status', {'msg': session.get('nickname') + ' has entered the room.'}, room=room)
+    emit('status', {'msg': session.get('username') + ' has entered the room.'}, room=room)
 
 
 @socketio.on('text', namespace='/chat')
 def text(message):
     room = session.get('room_name')
-    emit('message', {'msg': session.get('nickname') + ' : ' + message['msg']}, room=room)
+    emit('message', {'msg': session.get('username') + ' : ' + message['msg']}, room=room)
 
 
 @socketio.on('left', namespace='/chat')
 def left(message):
     room = session.get('room_name')
-    username = session.get('nickname')
+    username = session.get('username')
     leave_room(room)
     session.clear()
     emit('status', {'msg': username + ' has left the room.'}, room=room)
 
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True)
-
-
+    socketio.run(app, debug=True, host='0.0.0.0', port=80)
