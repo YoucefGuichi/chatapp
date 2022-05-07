@@ -3,7 +3,7 @@
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - animated form</title>
+  <title>Welcome Page</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 </head>
@@ -64,15 +64,11 @@
 							<i class='bx bxs-user'></i>
 							<p>
 								<h2>
-									Welcome to the University chatApp
+									Welcome {{message}} to the University chatApp
 								</h2>
 							</p>
 						</div>
 						<form action="{{url_for('chat')}}" method="POST">
-						<div class="input-group">
-							<i class='bx bxs-user'></i>
-							<input class="form-control" name="nickname" placeholder="write your nickname..">
-						</div>
 						<div class="input-group">
 							<i class='bx bxs-lock-alt'></i>
 							<input class="form-control" name="room" placeholder="write room name...">
@@ -82,14 +78,7 @@
 
 					</form>
 
-						<p>
-							<span>
-								Don't have an account?
-							</span>
-							<!-- <b onclick="Login.html" class="pointer">-->
-								Sign up here
-							</b>
-						</p>
+
 					</div>
 				</div>
 				<div class="form-wrapper">

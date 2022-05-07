@@ -28,7 +28,7 @@ def login():
         if username in df['Username'].values:
             nb = df.index[df['Username'] == username].values
             if password == df.iloc[nb.max(None)]['Password']:
-                return render_template('index.html')
+                return render_template('index.html', message= username)
             else:
                 msg = "Username or password incorrect"
                 return render_template('login.html', message=msg)
@@ -77,7 +77,7 @@ def join_chat():
 @app.route("/chat", methods=["GET", "POST"])
 def chat():
     if request.method == "POST":
-        nickname = request.form["nickname"]
+        nickname = request.form["nickname"] #Error here, needs to get the username name directly!!
         room_name = request.form["room"]
 
         # pass values to session
