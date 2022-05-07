@@ -13,16 +13,16 @@
 <body>
 <div class="row">
     <h2 class="admin-header col-7">Admin Panel</h2>
-    <form>
+    <form action="/admin" method="POST">
 
     <div class="form-group col-3" style="margin-top: 100px">
-            <input class="form-control form-group input-config"  placeholder="id"><br>
-            <input class="form-control form-group input-config" placeholder="username"><br>
-            <input class="form-control form-group input-config" placeholder="password"> <br>
+            <input class="form-control form-group input-config" name="id" placeholder="id"><br>
+            <input class="form-control form-group input-config" name="username" placeholder="username"><br>
+            <input class="form-control form-group input-config" name="password" placeholder="password"> <br>
   </div>
             <div class="form-group col-3">
-             <input class="btn btn-success" value="Edit">
-            <input class="btn btn-danger" value="Delete">
+             <input type="submit" name="submit_button" class="btn btn-success" value="Edit">
+            <input type="submit" name="submit_button" class="btn btn-danger" value="Delete">
                 </div>
 
 
@@ -35,6 +35,7 @@
     <table style="margin-top: 100px" class="table table-striped">
   <thead>
     <tr>
+
         {% for column in column_names %}
       <th scope="col">{{column}}</th>
         {% endfor %}

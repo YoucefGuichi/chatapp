@@ -97,8 +97,32 @@ def chat():
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
     users_data = pd.read_csv("database.csv")
-    users = users_data.itertuples()
-    column_names = users_data.columns.values
+    user_data_2 = users_data
+    if request.method == "POST":
+        # edit data
+        if request.form.get("submit_button") == "Edit":
+            user_name = request.form.get("username")
+            password = request.form.get("password")
+            id = request.form.get("id")
+            user_data_2.set_index("ID", inplace=True)
+            print(user_data_2.at[int(id), "Username"])
+            user_data_2.at[int(id), "Username"] = user_name
+            user_data_2.at[int(id), "Password"] = password
+            user_data_2.to_csv("database.csv")
+
+        # delete a particular row
+        elif request.form.get("submit_button") == "Delete":
+            user_data_2.set_index("ID", inplace=True)
+            id = request.form.get("id")
+            user_data_2.drop(index=int(id), inplace=True)
+            user_data_2.to_csv("database.csv")
+
+    users_data = pd.read_csv("database.csv")
+    users_data.reset_index(inplace=True)
+    users_data.rename({"Unnamed: 0": "id"})
+    users = user_data_2.itertuples()
+    column_names = user_data_2.columns.values
+
     return render_template("admin.html", users=users, column_names=column_names)
 
 
