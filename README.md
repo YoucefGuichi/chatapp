@@ -10,3 +10,8 @@ to run the app you need to install the libraries within the requirements.txt by 
 to run the app you need ro run the following command 
 
 ``python -m flask run``
+
+curl -L "https://github.com/gimlet-io/gimlet/releases/download/cli-v0.18.0/gimlet-$(uname)-$(uname -m)" -o gimlet
+chmod +x gimlet
+sudo mv ./gimlet /usr/local/bin/gimlet
+gimlet --version
